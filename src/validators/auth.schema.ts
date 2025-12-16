@@ -13,3 +13,17 @@ export type ResponseRegisterSchema = {
   name: string;
   email: string;
 };
+
+export const loginSchema = z.object({
+  email: z.email(),
+  password: z.string().min(8),
+});
+
+export type LoginSchema = z.infer<typeof loginSchema>;
+
+export type ResponseLoginSchema = {
+  id: number;
+  name: string;
+  email: string;
+  token: string;
+};
