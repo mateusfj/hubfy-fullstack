@@ -4,9 +4,7 @@ import { AppError } from "./error";
 export type ErrorMapperResponse = {
   statusCode: number;
   body: {
-    error: {
-      message: string;
-    };
+    message: string;
   };
 };
 
@@ -15,9 +13,7 @@ export function mapError(error: unknown): ErrorMapperResponse {
     return {
       statusCode: 422,
       body: {
-        error: {
-          message: JSON.parse(error.message)[0].message,
-        },
+        message: JSON.parse(error.message)[0].message,
       },
     };
   }
@@ -26,9 +22,7 @@ export function mapError(error: unknown): ErrorMapperResponse {
     return {
       statusCode: error.statusCode,
       body: {
-        error: {
-          message: error.message,
-        },
+        message: error.message,
       },
     };
   }
@@ -36,9 +30,7 @@ export function mapError(error: unknown): ErrorMapperResponse {
   return {
     statusCode: 500,
     body: {
-      error: {
-        message: "Erro interno do servidor",
-      },
+      message: "Erro interno do servidor",
     },
   };
 }
