@@ -8,7 +8,7 @@ import {
   ResponseRegisterSchema,
 } from "@/src/validators/auth.schema";
 import { NextResponse } from "next/server";
-import { RegisterUserUseCase } from "@/src/backend/application/use-cases/auth/create-user/create-user.usecase";
+import { RegisterUserUseCase } from "@/src/backend/application/use-cases/auth/create-user-usecase/create-user.usecase";
 import { IResponse } from "@/src/types/Response/IResponse";
 
 export async function POST(req: Request): Promise<NextResponse> {
