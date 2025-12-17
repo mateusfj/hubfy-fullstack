@@ -12,11 +12,37 @@ import {
 } from "@/src/validators/task.schema";
 import { UpdateTaskUseCase } from "@/src/backend/application/use-cases/task/update-task-usecase/update-task.usecase";
 import { DeleteTaskUseCase } from "@/src/backend/application/use-cases/task/delete-task-usecase/delete-task.usecase";
+import { GetTaskUseCase } from "@/src/backend/application/use-cases/task/get-task-usecase/get-task.usecase";
 import { authGuard } from "@/src/backend/infra/auth/guard/auth-guard";
 
 type RouteParams = {
   id: string;
 };
+
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<RouteParams> }
+): Promise<NextResponse> {
+  try {
+    const { id } = await params;
+
+    await authGuard(req);
+
+    const getTaskUseCase = new GetTaskUseCase();
+
+    const response: IResponse<ITask> = await getTaskUseCase.execute(id);
+
+    return NextResponse.json({
+      task: response.data,
+    });
+  } catch (error: unknown) {
+    const mappedError: ErrorMapperResponse = mapError(error);
+
+    return NextResponse.json(mappedError.body, {
+      status: mappedError.statusCode,
+    });
+  }
+}
 
 export async function PATCH(
   req: Request,
@@ -26,6 +52,7 @@ export async function PATCH(
     const { id } = await params;
 
     await authGuard(req);
+
     const body = await req.json();
 
     const data: UpdateTaskSchema = updateTaskSchema.parse(body);
