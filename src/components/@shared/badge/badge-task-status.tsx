@@ -1,4 +1,4 @@
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/src/components/ui/badge";
 import { TASK_STATUS_LABELS } from "@/src/lib/utils/constants/task-status";
 
 interface IBadgeTaskStatusProps {
