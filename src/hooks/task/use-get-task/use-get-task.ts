@@ -13,7 +13,7 @@ export const useGetTask = ({ taskId, enabled = true }: useGetTaskProps) => {
     queryKey: TASK_QUERY_KEY.detail(taskId),
     queryFn: async () => {
       const response = await CUSTOM_TASK.getOne(taskId);
-      return response.tasks;
+      return response.task;
     },
   });
 };

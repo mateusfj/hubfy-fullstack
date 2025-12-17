@@ -11,6 +11,8 @@ import { DataTable } from "../../@shared/data-table/data-table";
 import { ITask } from "@/src/types/ITask";
 import { DataTableColumnHeader } from "../../@shared/data-table/data-table-column-header";
 import { CustomDialog } from "../../@shared/custom-dialog/custom-dialog";
+import { TaskForm } from "../../forms/task-form/task-form";
+import { BadgeTaskStatus } from "../../@shared/badge/badge-task-status";
 
 export const TaskTable = () => {
   const [pagination, setPagination] = useState<PaginationState>({
@@ -19,10 +21,11 @@ export const TaskTable = () => {
   });
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
 
   const {
-    data: taskResult,
+    data: taskResult = [],
     isLoading: tasksIsLoading,
     isError: tasksIsError,
   } = useGetAllTasks({});
@@ -50,16 +53,26 @@ export const TaskTable = () => {
     {
       accessorKey: "title",
       header: ({ column }) => {
-        return <DataTableColumnHeader column={column} title="Title" />;
+        return <DataTableColumnHeader column={column} title="Título" />;
       },
     },
-
     {
       accessorKey: "status",
       header: ({ column }) => {
-        return (
-          <DataTableColumnHeader column={column} title="Tipo de trabalho" />
-        );
+        return <DataTableColumnHeader column={column} title="Status" />;
+      },
+      cell: ({ row }) => {
+        return <p>{BadgeTaskStatus({ status: row.getValue("status") })}</p>;
+      },
+    },
+    {
+      accessorKey: "description",
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="Descrição" />;
+      },
+      cell: ({ row }) => {
+        const description = row.getValue("description") as string;
+        return <p>{description ?? "Sem descrição"}</p>;
       },
     },
     {
@@ -68,7 +81,14 @@ export const TaskTable = () => {
       cell: ({ row }) => {
         return (
           <div className="space-x-2">
-            <Button variant="secondary" size="icon" onClick={() => {}}>
+            <Button
+              variant="secondary"
+              size="icon"
+              onClick={() => {
+                setOpenDialog(true);
+                setSelectedTaskId(row.original.id!);
+              }}
+            >
               <Edit />
             </Button>
             <Button
@@ -88,11 +108,26 @@ export const TaskTable = () => {
     <>
       <DataTable
         columns={columns}
-        data={taskResult || []}
+        data={taskResult}
         onSetPagination={setPagination}
         pagination={pagination}
         isLoading={tasksIsLoading}
         isError={tasksIsError}
+      />
+      <CustomDialog
+        open={openDialog}
+        onOpenChange={() => setOpenDialog(false)}
+        title="Editar Tarefa"
+        content={
+          <div className="p-4">
+            <TaskForm
+              taskId={selectedTaskId ?? undefined}
+              onClose={() => {
+                setOpenDialog(false);
+              }}
+            />
+          </div>
+        }
       />
       <CustomDialog
         open={isDeleteDialogOpen}
@@ -105,7 +140,11 @@ export const TaskTable = () => {
         }
         footer={
           <div className="flex justify-end gap-2">
-            <Button variant="secondary" onClick={() => closeDeleteModal()}>
+            <Button
+              variant="secondary"
+              onClick={() => closeDeleteModal()}
+              disabled={isDeleting}
+            >
               Cancelar
             </Button>
             <Button

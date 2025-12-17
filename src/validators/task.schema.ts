@@ -4,9 +4,9 @@ import { TaskStatus } from "@/src/types/ITask";
 
 export const createTaskSchema = z.object({
   userId: z.number().int().positive(),
-  title: z.string().min(1),
+  title: z.string().min(1, "Campo obrigatório"),
   description: z.string().optional(),
-  status: z.enum(TaskStatus),
+  status: z.enum(TaskStatus, { message: "Campo obrigatório" }),
 });
 
 export type CreateTaskSchema = z.infer<typeof createTaskSchema>;

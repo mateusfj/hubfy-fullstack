@@ -3,10 +3,11 @@
 import { TASK_STATUS } from "@/src/lib/utils/constants/task-status";
 import { FormInput } from "../../@shared/form/form-input/form-input";
 import { FormSelect } from "../../@shared/form/form-select/form-select";
-import { FormTextArea } from "../../@shared/form/form-textarea/form-textearea";
+import { FormTextArea } from "../../@shared/form/form-textarea/form-textarea";
 import { Button } from "../../ui/button";
 import { Form } from "../../ui/form";
-import { useTaskForm } from "./task-job-form";
+import { useTaskForm } from "./use-task-form";
+import { Spinner } from "../../ui/spinner";
 
 interface TaskFormProps {
   onClose?: () => void;
@@ -25,7 +26,11 @@ const TaskForm = ({ onClose, taskId }: TaskFormProps) => {
   }
 
   if (isLoadingTask) {
-    return <div>Carregando...</div>;
+    return (
+      <div className="flex justify-center items-center p-10">
+        <Spinner />
+      </div>
+    );
   }
 
   return (
@@ -59,12 +64,17 @@ const TaskForm = ({ onClose, taskId }: TaskFormProps) => {
 
           <div className="flex justify-end gap-2">
             {onClose && (
-              <Button variant="outline" type="button" onClick={onClose}>
+              <Button
+                variant="outline"
+                type="button"
+                onClick={onClose}
+                disabled={form.formState.isSubmitting}
+              >
                 Cancelar
               </Button>
             )}
             <Button
-              className=" cursor-pointer"
+              className="cursor-pointer"
               type="submit"
               disabled={form.formState.isSubmitting}
             >

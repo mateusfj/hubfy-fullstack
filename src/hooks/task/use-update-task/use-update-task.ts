@@ -17,7 +17,7 @@ export const useUpdateTask = (invalidateQueries: object) => {
     },
 
     onMutate() {
-      const toastId = toast.loading("Cadastrando usuário...");
+      const toastId = toast.loading("Atualizando tarefa...");
       return { toastId };
     },
 
@@ -27,7 +27,7 @@ export const useUpdateTask = (invalidateQueries: object) => {
     },
 
     onSuccess(_, __, context) {
-      toast.success("Cadastro realizado com sucesso!");
+      toast.success("Tarefa atualizada com sucesso!");
       toast.dismiss(context?.toastId);
       queryClient.invalidateQueries(invalidateQueries);
     },

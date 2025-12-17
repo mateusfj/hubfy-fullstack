@@ -8,7 +8,7 @@ import {
 } from "@/src/types/Response/IResponse";
 
 type TaskListResponse = ApiListResponse<"tasks", ITask>;
-type TaskSingleResponse = ApiSingleResponse<"tasks", ITask>;
+type TaskSingleResponse = ApiSingleResponse<"task", ITask>;
 
 const TASK = apiMethods<TaskListResponse, TaskSingleResponse, CreateTaskSchema>(
   axiosConfig,

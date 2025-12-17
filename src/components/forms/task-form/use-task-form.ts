@@ -3,14 +3,13 @@ import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { useGetTask } from "@/src/hooks/task/use-get-task/use-get-task";
-import { useCreateTask } from "@/src/hooks/task/use-create-taks/use-create-taks";
+import { useCreateTask } from "@/src/hooks/task/use-create-task/use-create-task";
 import { TASK_QUERY_KEY } from "@/src/services/query-keys/task/task";
 import { useUpdateTask } from "@/src/hooks/task/use-update-task/use-update-task";
 import {
   createTaskSchema,
   CreateTaskSchema,
 } from "@/src/validators/task.schema";
-import { TaskStatus } from "@/src/types/ITask";
 import { AuthContext } from "@/src/lib/utils/providers/AuthProvider";
 
 interface UseTaskFormProps {
@@ -41,8 +40,8 @@ export const useTaskForm = ({ onClose, taskId }: UseTaskFormProps) => {
     defaultValues: {
       userId: user?.id ?? 0,
       title: "",
-      description: "",
-      status: TaskStatus.PENDING,
+      description: undefined,
+      status: undefined,
     },
     resolver: zodResolver(createTaskSchema),
   });
@@ -61,12 +60,11 @@ export const useTaskForm = ({ onClose, taskId }: UseTaskFormProps) => {
   async function onSubmit(values: CreateTaskSchema): Promise<void> {
     if (taskId) {
       await updateTask({ data: values, id: taskId });
-      onClose?.();
     } else {
       await createTask(values);
-      onClose?.();
     }
     form.reset();
+    onClose?.();
   }
 
   return {
