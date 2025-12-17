@@ -18,3 +18,15 @@ export class ConflictError extends AppError {
     super(message, 409);
   }
 }
+
+export class NotFoundError extends AppError {
+  constructor(message: string) {
+    super(message, 404);
+  }
+}
+
+export class UnauthorizedError extends AppError {
+  constructor(message = "Unauthorized") {
+    super(message, 401);
+  }
+}

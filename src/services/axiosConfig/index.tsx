@@ -1,3 +1,4 @@
+import { getTokens } from "@/src/app/actions/get-token/get-token";
 import axios, { AxiosInstance } from "axios";
 
 const instance: AxiosInstance = axios.create({
@@ -6,6 +7,10 @@ const instance: AxiosInstance = axios.create({
 
 instance.interceptors.request.use(
   async (config) => {
+    const { accessToken } = await getTokens();
+
+    config.headers.Authorization = "Bearer " + accessToken;
+
     return config;
   },
   (error): Promise<never> => {
