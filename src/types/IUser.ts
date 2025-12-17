@@ -11,3 +11,8 @@ export interface IUserWithoutPassword {
   name: string;
   email: string;
 }
+
+export interface IUserToken {
+  token: string;
+  user: IUserWithoutPassword;
+}

@@ -10,6 +10,7 @@ import {
 import { NextResponse } from "next/server";
 import { IResponse } from "@/src/types/Response/IResponse";
 import { LoginUseCase } from "@/src/backend/application/use-cases/auth/login-usecase/login.usecase";
+import { setCookie } from "@/src/app/actions/set-cookies/set-cookies";
 
 export async function POST(req: Request): Promise<NextResponse> {
   try {
@@ -23,12 +24,14 @@ export async function POST(req: Request): Promise<NextResponse> {
       data
     );
 
+    await setCookie(response.data.token);
+
     return NextResponse.json({
-      token: response.data?.token,
+      token: response.data.token,
       user: {
-        id: response.data?.id,
-        email: response.data?.email,
-        name: response.data?.name,
+        id: response.data.id,
+        email: response.data.email,
+        name: response.data.name,
       },
     });
   } catch (error: unknown) {
