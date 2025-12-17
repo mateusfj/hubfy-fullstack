@@ -8,7 +8,6 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -22,13 +21,20 @@ import {
 } from "@/src/components/ui/sidebar";
 import { Skeleton } from "@/src/components/ui/skeleton";
 import { AuthContext } from "@/src/lib/utils/providers/AuthProvider";
+import { useQueryClient } from "@tanstack/react-query";
 
-import { BadgeCheck, Bell, ChevronsUpDown, LogOut } from "lucide-react";
+import { ChevronsUpDown, LogOut } from "lucide-react";
 import { useContext } from "react";
 
 export function NavUser() {
+  const queryClient = useQueryClient();
   const { user } = useContext(AuthContext);
   const { isMobile } = useSidebar();
+
+  const handleLogout = async (): Promise<void> => {
+    queryClient.clear();
+    window.location.href = "/api/auth/logout";
+  };
 
   if (!user) {
     return <Skeleton className="h-10 w-full rounded-lg" />;
@@ -77,18 +83,12 @@ export function NavUser() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Minha conta
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => {}} variant="destructive">
+            <DropdownMenuItem
+              onClick={() => {
+                handleLogout();
+              }}
+              variant="destructive"
+            >
               <LogOut />
               Sair
             </DropdownMenuItem>
