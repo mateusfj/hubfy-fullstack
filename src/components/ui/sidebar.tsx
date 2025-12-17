@@ -22,9 +22,10 @@ import {
   TooltipTrigger,
 } from "@/src/components/ui/tooltip";
 import { useIsMobile } from "@/src/hooks/use-mobile";
-import { Input } from "./input";
+
 import { Separator } from "./separator";
 import { Skeleton } from "./skeleton";
+import { Input } from "@/components/ui/input";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;

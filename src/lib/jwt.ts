@@ -1,9 +1,14 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { IUserWithoutPassword } from "../types/IUser";
+
+export interface JwtPayloadInterface extends JwtPayload {
+  id: number;
+  name: string;
+  email: string;
+}
 
 const JWT_SECRET: string = process.env.JWT_SECRET!;
 
-export function signToken(payload: IUserWithoutPassword): string {
+export function signToken(payload: JwtPayloadInterface): string {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: "1d" });
 }
 
