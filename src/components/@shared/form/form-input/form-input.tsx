@@ -1,4 +1,3 @@
-import { Input } from "@/components/ui/input";
 import {
   FormControl,
   FormField,
@@ -6,6 +5,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/src/components/ui/form";
+import { Input } from "@/src/components/ui/input";
 import { Control } from "react-hook-form";
 
 interface TextInputProps {

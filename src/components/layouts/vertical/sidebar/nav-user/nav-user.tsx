@@ -20,16 +20,19 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/src/components/ui/sidebar";
+import { Skeleton } from "@/src/components/ui/skeleton";
+import { AuthContext } from "@/src/lib/utils/providers/AuthProvider";
 
 import { BadgeCheck, Bell, ChevronsUpDown, LogOut } from "lucide-react";
+import { useContext } from "react";
 
 export function NavUser() {
+  const { user } = useContext(AuthContext);
   const { isMobile } = useSidebar();
 
-  const user = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-  };
+  if (!user) {
+    return <Skeleton className="h-10 w-full rounded-lg" />;
+  }
 
   return (
     <SidebarMenu>
