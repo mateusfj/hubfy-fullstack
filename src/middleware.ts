@@ -26,7 +26,7 @@ export async function middleware(request: NextRequest) {
 
   if (authToken && isPublicRoute) {
     const redirectPath: NextURL = request.nextUrl.clone();
-    redirectPath.pathname = "/";
+    redirectPath.pathname = "/dashboard";
     return NextResponse.redirect(redirectPath);
   }
 

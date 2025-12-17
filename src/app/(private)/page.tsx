@@ -1,5 +1,4 @@
-export const Page = () => {
-  return <div>Private Page</div>;
+const Page = () => {
+  return <h1>Private Page</h1>;
 };
-
 export default Page;
