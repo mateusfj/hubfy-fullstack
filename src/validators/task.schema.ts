@@ -6,7 +6,7 @@ export const createTaskSchema = z.object({
   userId: z.number().int().positive(),
   title: z.string().min(1),
   description: z.string().optional(),
-  status: z.nativeEnum(TaskStatus).optional().default(TaskStatus.PENDING),
+  status: z.enum(TaskStatus),
 });
 
 export type CreateTaskSchema = z.infer<typeof createTaskSchema>;
@@ -14,7 +14,7 @@ export type CreateTaskSchema = z.infer<typeof createTaskSchema>;
 export const updateTaskSchema = z.object({
   title: z.string().min(1).optional(),
   description: z.string().optional(),
-  status: z.nativeEnum(TaskStatus).optional(),
+  status: z.enum(TaskStatus).optional(),
 });
 
 export type UpdateTaskSchema = z.infer<typeof updateTaskSchema>;
