@@ -14,6 +14,56 @@ import { CreateTaskUseCase } from "@/src/backend/application/use-cases/task/crea
 import { ListTasksUseCase } from "@/src/backend/application/use-cases/task/list-tasks-usecase/list-tasks.usecase";
 import { authGuard } from "@/src/backend/infra/auth/guard/auth-guard";
 
+/**
+ * @swagger
+ * /api/task:
+ *   post:
+ *     tags:
+ *       - Tasks
+ *     summary: Cria uma nova tarefa
+ *     description: Cria uma tarefa associada ao usuário autenticado.
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateTask'
+ *     responses:
+ *       201:
+ *         description: Tarefa criada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CreateTaskResponse'
+ *       400:
+ *         description: Erro de validação
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Não autorizado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *   get:
+ *     tags:
+ *       - Tasks
+ *     summary: Lista tarefas do usuário autenticado
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de tarefas retornada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/TaskListResponse'
+ */
+
 export async function POST(req: Request): Promise<NextResponse> {
   try {
     await authGuard(req);

@@ -11,6 +11,47 @@ import { NextResponse } from "next/server";
 import { RegisterUserUseCase } from "@/src/backend/application/use-cases/auth/create-user-usecase/create-user.usecase";
 import { IResponse } from "@/src/types/Response/IResponse";
 
+/**
+ * @swagger
+ * /api/auth/register:
+ *   post:
+ *     tags:
+ *       - Auth
+ *     summary: Registra um novo usuário
+ *     description: Cria um usuário na aplicação.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               password:
+ *                 type: string
+ *             required:
+ *               - name
+ *               - email
+ *               - password
+ *     responses:
+ *       201:
+ *         description: Usuário criado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/RegisterResponse'
+ *       400:
+ *         description: Erro de validação
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
 export async function POST(req: Request): Promise<NextResponse> {
   try {
     const body = await req.json();
