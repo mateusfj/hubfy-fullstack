@@ -13,6 +13,7 @@ import { DataTableColumnHeader } from "../../@shared/data-table/data-table-colum
 import { CustomDialog } from "../../@shared/custom-dialog/custom-dialog";
 import { TaskForm } from "../../forms/task-form/task-form";
 import { BadgeTaskStatus } from "../../badge/badge-task-status";
+import { textLimiter } from "@/src/lib/utils/functions/textLimitter";
 
 export const TaskTable = () => {
   const [pagination, setPagination] = useState<PaginationState>({
@@ -72,7 +73,7 @@ export const TaskTable = () => {
       },
       cell: ({ row }) => {
         const description = row.getValue("description") as string;
-        return <p>{description ?? "Sem descrição"}</p>;
+        return <p>{textLimiter(description, 40) ?? "Sem descrição"}</p>;
       },
     },
     {
