@@ -50,7 +50,10 @@ export const getApiDocs = async () => {
               userId: { type: "number" },
               title: { type: "string" },
               description: { type: "string" },
-              status: { type: "string" },
+              status: {
+                type: "string",
+                enum: ["PENDING", "IN_PROGRESS", "COMPLETED"],
+              },
               createdAt: { type: "string", format: "date-time" },
               updatedAt: { type: "string", format: "date-time" },
             },
@@ -63,8 +66,15 @@ export const getApiDocs = async () => {
                 type: "array",
                 items: { $ref: "#/components/schemas/Task" },
               },
+              meta: {
+                type: "object",
+                properties: {
+                  total: { type: "number" },
+                },
+                required: ["total"],
+              },
             },
-            required: ["tasks"],
+            required: ["tasks", "meta"],
           },
           TaskDetailResponse: {
             type: "object",
