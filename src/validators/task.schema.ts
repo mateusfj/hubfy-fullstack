@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { TaskStatus } from "@/src/types/ITask";
+import { querySchema } from "./query.schema";
 
 export const createTaskSchema = z.object({
   userId: z.number().int().positive(),
@@ -28,3 +29,9 @@ export type ResponseTaskSchema = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export const listTasksQuerySchema = querySchema.extend({
+  status: z.enum(TaskStatus).optional(),
+});
+
+export type ListTasksQuerySchema = z.infer<typeof listTasksQuerySchema>;

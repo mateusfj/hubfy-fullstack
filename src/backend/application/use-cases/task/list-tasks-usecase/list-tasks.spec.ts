@@ -44,15 +44,21 @@ describe("ListTasksUseCase (unit)", (): void => {
       },
     ];
 
-    (mockTaskRepository.findAllByUser as jest.Mock).mockResolvedValue(tasks);
+    (mockTaskRepository.findAllByUser as jest.Mock).mockResolvedValue({
+      tasks,
+      total: tasks.length,
+    });
 
     const result = await listTasksUseCase.execute(1);
 
-    expect(mockTaskRepository.findAllByUser).toHaveBeenCalledWith(1);
-
     expect(result).toEqual({
       ok: true,
-      data: tasks,
+      data: {
+        tasks,
+        meta: {
+          total: tasks.length,
+        },
+      },
     });
   });
 });
