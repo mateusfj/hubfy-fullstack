@@ -12,7 +12,7 @@ import { ITask } from "@/src/types/ITask";
 import { DataTableColumnHeader } from "../../@shared/data-table/data-table-column-header";
 import { CustomDialog } from "../../@shared/custom-dialog/custom-dialog";
 import { TaskForm } from "../../forms/task-form/task-form";
-import { BadgeTaskStatus } from "../../@shared/badge/badge-task-status";
+import { BadgeTaskStatus } from "../../badge/badge-task-status";
 
 export const TaskTable = () => {
   const [pagination, setPagination] = useState<PaginationState>({
