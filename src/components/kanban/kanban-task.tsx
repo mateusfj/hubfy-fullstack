@@ -118,22 +118,26 @@ const KanbanTask = () => {
                     </Button>
                   </div>
                 </KanbanHeader>
-
-                <KanbanCards id={column.id}>
-                  {(feature: KanbanFeature) => (
-                    <KanbanCard
-                      id={feature.id}
-                      column={column.id}
-                      name={feature.name}
-                    >
-                      <KanbanTaskCard
+                {kanbanData.filter((task) => task.column === column.id)
+                  .length === 0 ? (
+                  <div className="p-4 text-center text-sm ">Nenhuma tarefa</div>
+                ) : (
+                  <KanbanCards id={column.id}>
+                    {(feature: KanbanFeature) => (
+                      <KanbanCard
+                        id={feature.id}
+                        column={column.id}
                         name={feature.name}
-                        startAt={feature.startAt}
-                        status={column.id}
-                      />
-                    </KanbanCard>
-                  )}
-                </KanbanCards>
+                      >
+                        <KanbanTaskCard
+                          name={feature.name}
+                          startAt={feature.startAt}
+                          status={column.id}
+                        />
+                      </KanbanCard>
+                    )}
+                  </KanbanCards>
+                )}
               </KanbanBoard>
             )}
           </KanbanProvider>
