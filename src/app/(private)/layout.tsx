@@ -18,7 +18,7 @@ export default function PrivateLayout({
       <AppSidebar />
       <SidebarInset>
         <Header />
-        <div className="@container/main flex flex-1 flex-col p-4">
+        <div className="@container/main flex flex-1 flex-col p-4 overflow-hidden">
           {children}
         </div>
       </SidebarInset>
