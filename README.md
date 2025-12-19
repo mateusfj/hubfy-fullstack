@@ -1,36 +1,196 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hubfy Fullstack
 
-## Getting Started
+Aplicação fullstack construída com Next.js (App Router), Prisma e MySQL, com autenticação (login, registro e logout) e um CRUD de tarefas com visualização em lista e Kanban.
 
-First, run the development server:
+Este README explica como configurar o ambiente e rodar o projeto localmente.
+
+---
+
+## Requisitos
+
+- Node.js >= 18 (recomendado LTS)
+- npm
+- Docker e Docker Compose (recomendado para subir o MySQL)
+
+---
+
+## 1. Clonar o repositório
+
+```bash
+git clone https://github.com/mateusfj/hubfy-fullstack.git
+cd hubfy-fullstack
+```
+
+---
+
+## 2. Configurar variáveis de ambiente
+
+O projeto possui um arquivo `.env.example` na raiz. Crie um arquivo `.env` com base nele.
+
+Exemplo de configuração para desenvolvimento local:
+
+```env
+# MYSQL
+MYSQL_ROOT_PASSWORD=hubfy_root
+MYSQL_DATABASE=hubfy_db
+MYSQL_USER=hubfy_user
+MYSQL_PASSWORD=hubfy_password
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+
+DATABASE_URL=mysql://root:hubfy_root@localhost:3306/hubfy_db
+
+# API
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
+
+# JWT
+JWT_SECRET=525ccc4e376d63bdedf39477ff5ba10b7c98ea6671ba341172405f984eeb9b14
+JWT_EXPIRES_IN=3600
+```
+
+Observações:
+
+- DATABASE_URL deve apontar corretamente para o MySQL.
+- NEXT_PUBLIC_API_URL, em desenvolvimento, aponta para a própria API do Next.js.
+- JWT_EXPIRES_IN está em segundos (3600 = 1 hora).
+
+---
+
+## 3. Subir o MySQL com Docker
+
+O projeto possui um `docker-compose.yml` configurado para o MySQL.
+
+Para subir o banco:
+
+```bash
+docker compose up -d
+```
+
+Verifique se o container está rodando:
+
+```bash
+docker ps
+```
+
+Você deve ver um container chamado `mysql_db` em execução.
+
+---
+
+## 4. Instalar dependências
+
+Na raiz do projeto:
+
+```bash
+npm install
+```
+
+---
+
+## 5. Rodar migrações do Prisma
+
+Com o banco rodando e o `.env` configurado:
+
+```bash
+npm run migrate
+npm run generate
+```
+
+---
+
+## 6. Rodar o projeto em desenvolvimento
+
+Para iniciar o servidor:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+A aplicação ficará disponível em:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Frontend / API: [http://localhost:3000](http://localhost:3000)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 7. Documentação da API
 
-To learn more about Next.js, take a look at the following resources:
+Com o projeto rodando:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Swagger UI: [http://localhost:3000/api-doc](http://localhost:3000/api-doc)
+- Documentação em Markdown: arquivo `API.md` na raiz do projeto
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 8. Fluxo básico de uso
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Acesse [http://localhost:3000/register](http://localhost:3000/register) e crie um usuário.
+2. Faça login em [http://localhost:3000/login](http://localhost:3000/login).
+3. Após autenticar, você terá acesso à área privada, onde poderá:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   - Criar tarefas.
+   - Visualizar tarefas em lista ou Kanban.
+   - Filtrar, ordenar e paginar tarefas.
+   - Atualizar status, editar e remover tarefas.
+
+As mesmas operações estão disponíveis via API (ver Swagger ou API.md).
+
+---
+
+## 9. Rodar testes
+
+O projeto utiliza Jest.
+
+Para executar os testes:
+
+```bash
+npm run test
+```
+
+Se algum teste depender de banco de dados, certifique-se de que o MySQL esteja rodando.
+
+---
+
+## 10. Build e execução em produção (local)
+
+Gerar build:
+
+```bash
+npm run build
+```
+
+Executar em produção:
+
+```bash
+npm start
+```
+
+Por padrão, a aplicação roda na porta 3000.
+
+---
+
+## 11. Problemas comuns
+
+### Erro de conexão com o banco
+
+- Verifique se o MySQL está rodando (`docker ps`).
+- Confira se as variáveis do `.env` estão corretas.
+
+### Erro nas migrações (Prisma)
+
+Resetar o banco de desenvolvimento:
+
+```bash
+npx prisma migrate reset
+```
+
+### Erros de autenticação / JWT
+
+- Garanta que `JWT_SECRET` esteja definido.
+- Confirme se `JWT_EXPIRES_IN` possui um valor válido.
+
+---
+
+## 12. Referências
+
+- Next.js
+- Prisma
+- Jest
