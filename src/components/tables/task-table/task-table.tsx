@@ -16,7 +16,15 @@ import { BadgeTaskStatus } from "../../badge/badge-task-status";
 import { textLimiter } from "@/src/lib/utils/functions/textLimitter";
 import { TaskTableFilters } from "./components/task-table-filters";
 
-export const TaskTable = () => {
+interface TaskTableProps {
+  orderBy?: "createdAt" | "title";
+  orderDirection?: "asc" | "desc";
+}
+
+export const TaskTable = ({
+  orderBy = "createdAt",
+  orderDirection = "desc",
+}: TaskTableProps) => {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -35,7 +43,9 @@ export const TaskTable = () => {
   } = useGetAllTasks({
     pagination,
     search,
-    status: status === "" ? undefined : (status as TaskStatus),
+    status: status || undefined,
+    orderBy,
+    orderDirection,
   });
 
   const { mutateAsync: deleteTask, isPending: isDeleting } = useDeleteTask(
@@ -90,7 +100,7 @@ export const TaskTable = () => {
         return (
           <div className="space-x-2">
             <Button
-              variant="default"
+              variant="ghost"
               size="icon"
               onClick={() => {
                 setOpenDialog(true);
@@ -100,7 +110,7 @@ export const TaskTable = () => {
               <Edit />
             </Button>
             <Button
-              variant="destructive"
+              variant="ghost"
               size="icon"
               onClick={() => openDeleteModal(row.original.id!)}
             >

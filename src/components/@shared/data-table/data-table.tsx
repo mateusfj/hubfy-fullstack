@@ -25,6 +25,7 @@ import {
 } from "@/src/components/ui/table";
 import { Checkbox } from "@/src/components/ui/checkbox";
 import { Spinner } from "../../ui/spinner";
+import { ErrorState } from "../error-state/error-state";
 
 interface DataTableProps<TData, TValue> {
   enableRowSelection?: boolean;
@@ -157,7 +158,7 @@ export function DataTable<TData, TValue>({
                     <Spinner />
                   </div>
                 ) : isError ? (
-                  "Erro ao carregar os dados."
+                  <ErrorState />
                 ) : (
                   "Nenhum resultado encontrado."
                 )}

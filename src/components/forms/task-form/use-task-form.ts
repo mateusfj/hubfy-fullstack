@@ -11,13 +11,15 @@ import {
   CreateTaskSchema,
 } from "@/src/validators/task.schema";
 import { AuthContext } from "@/src/lib/utils/providers/AuthProvider";
+import { TaskStatus } from "@/src/types/ITask";
 
 interface UseTaskFormProps {
   onClose?: () => void;
   taskId?: number;
+  status?: TaskStatus;
 }
 
-export const useTaskForm = ({ onClose, taskId }: UseTaskFormProps) => {
+export const useTaskForm = ({ onClose, taskId, status }: UseTaskFormProps) => {
   const { user } = useContext(AuthContext);
   const {
     data: resultTask,
@@ -41,7 +43,7 @@ export const useTaskForm = ({ onClose, taskId }: UseTaskFormProps) => {
       userId: user?.id ?? 0,
       title: "",
       description: undefined,
-      status: undefined,
+      status: status,
     },
     resolver: zodResolver(createTaskSchema),
   });
