@@ -145,8 +145,6 @@ Para executar os testes:
 npm run test
 ```
 
-Se algum teste depender de banco de dados, certifique-se de que o MySQL esteja rodando.
-
 ---
 
 ## 10. Build e execução em produção (local)

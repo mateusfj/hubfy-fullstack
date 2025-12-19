@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 
 import { UserRepositoryInterface } from "@/src/backend/ports/repositories/user.repository.interface";
-import { LoginUseCase } from "./login.usecase";
+import { LoginUseCase } from "../../../backend/application/use-cases/auth/login-usecase/login.usecase";
 import { LoginSchema } from "@/src/validators/auth.schema";
 import { signToken } from "@/src/lib/jwt";
 

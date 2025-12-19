@@ -1,7 +1,8 @@
 import { TaskRepositoryInterface } from "@/src/backend/ports/repositories/task.repository.interface";
 import { ITask, TaskStatus } from "@/src/types/ITask";
-import { ListTasksUseCase } from "./list-tasks.usecase";
+
 import { TaskData } from "@/src/backend/infra/adapters/task.repository";
+import { ListTasksUseCase } from "@/src/backend/application/use-cases/task/list-tasks-usecase/list-tasks.usecase";
 
 describe("ListTasksUseCase (unit)", (): void => {
   const mockTaskRepository = {

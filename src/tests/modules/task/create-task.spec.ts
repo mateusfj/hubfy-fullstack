@@ -1,8 +1,9 @@
 import { ITask, TaskStatus } from "@/src/types/ITask";
-import { CreateTaskUseCase } from "./create-task.usecase";
+
 import { CreateTaskSchema } from "@/src/validators/task.schema";
 import { TaskData } from "@/src/backend/infra/adapters/task.repository";
 import { TaskRepositoryInterface } from "@/src/backend/ports/repositories/task.repository.interface";
+import { CreateTaskUseCase } from "@/src/backend/application/use-cases/task/create-task-usecase/create-task.usecase";
 
 describe("CreateTaskUseCase (unit)", (): void => {
   const mockTaskRepository = {

@@ -1,5 +1,5 @@
+import { RegisterUserUseCase } from "@/src/backend/application/use-cases/auth/create-user-usecase/create-user.usecase";
 import { UserRepositoryInterface } from "@/src/backend/ports/repositories/user.repository.interface";
-import { RegisterUserUseCase } from "./create-user.usecase";
 
 describe("RegisterUserUseCase (unit)", (): void => {
   const mockUserRepository: jest.Mocked<UserRepositoryInterface> = {
