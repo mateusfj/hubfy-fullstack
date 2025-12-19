@@ -28,14 +28,14 @@ const apiMethods = <
   deleteOne: async (id: number): Promise<void> => {
     return await del(axios, `${path}/${id}`);
   },
-  getList: async (params?: number): Promise<TListResponse> => {
+  getList: async (params?: string): Promise<TListResponse> => {
     if (params) {
       return await get(axios, `${path}${params}`);
     } else {
       return await get(axios, path);
     }
   },
-  getOne: async (id: number, params?: number): Promise<TSingleResponse> => {
+  getOne: async (id: number, params?: string): Promise<TSingleResponse> => {
     if (params) {
       return await get(axios, `${path}/${id}${params}`);
     } else {

@@ -59,7 +59,7 @@ export class PrismaTaskRepository implements TaskRepositoryInterface<TaskData> {
     const where: {
       userId: number;
       status?: TaskStatus;
-      title?: string;
+      title?: { contains: string };
     } = {
       userId,
     };
@@ -69,7 +69,7 @@ export class PrismaTaskRepository implements TaskRepositoryInterface<TaskData> {
     }
 
     if (search) {
-      where.title = search;
+      where.title = { contains: search };
     }
 
     const [tasks, total] = await Promise.all([
