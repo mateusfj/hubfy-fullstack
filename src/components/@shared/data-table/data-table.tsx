@@ -24,6 +24,7 @@ import {
   TableRow,
 } from "@/src/components/ui/table";
 import { Checkbox } from "@/src/components/ui/checkbox";
+import { Spinner } from "../../ui/spinner";
 
 interface DataTableProps<TData, TValue> {
   enableRowSelection?: boolean;
@@ -34,6 +35,7 @@ interface DataTableProps<TData, TValue> {
       | PaginationState
       | ((pagination: PaginationState) => PaginationState)
   ) => void;
+  total: number;
   pagination: PaginationState;
   isLoading: boolean;
   isError: boolean;
@@ -43,6 +45,7 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   onSetPagination,
+  total,
   pagination,
   isLoading,
   isError,
@@ -101,7 +104,7 @@ export function DataTable<TData, TValue>({
     onRowSelectionChange: setRowSelection,
     onPaginationChange: onSetPagination,
     manualPagination: true,
-    pageCount: Math.ceil(pagination.pageIndex / pagination.pageSize),
+    pageCount: Math.ceil(total / pagination.pageSize),
     state: {
       pagination,
       sorting,
@@ -149,11 +152,15 @@ export function DataTable<TData, TValue>({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                {isLoading
-                  ? "Loading..."
-                  : isError
-                  ? "Error loading data."
-                  : "No results."}
+                {isLoading ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <Spinner />
+                  </div>
+                ) : isError ? (
+                  "Erro ao carregar os dados."
+                ) : (
+                  "Nenhum resultado encontrado."
+                )}
               </TableCell>
             </TableRow>
           )}

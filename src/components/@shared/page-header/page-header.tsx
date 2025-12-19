@@ -23,12 +23,10 @@ const PageHeader = ({
         <p className="text-muted-foreground">{description}</p>
       </div>
       {onClick && (
-        <div className="flex gap-2">
-          <Button className=" w-full" onClick={onClick}>
-            <Plus />
-            {buttonText}
-          </Button>
-        </div>
+        <Button className="w-full md:w-auto" onClick={onClick}>
+          <Plus />
+          {buttonText}
+        </Button>
       )}
     </div>
   );

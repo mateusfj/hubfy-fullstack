@@ -12,16 +12,16 @@ export const Page = () => {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Minhas Tasks"
-        description="Gerencie suas tasks aqui"
+        title="Minhas Tarefas"
+        description="Gerencie suas tarefas aqui"
         onClick={() => setOpenDialog(true)}
-        buttonText="Criar nova Task"
+        buttonText="Criar nova Tarefa"
       />
       <TaskTable />
       <CustomDialog
         open={openDialog}
         onOpenChange={() => setOpenDialog(false)}
-        title="Criar nova Task"
+        title="Criar nova Tarefa"
         content={
           <div className="p-4">
             <TaskForm

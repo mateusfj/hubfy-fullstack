@@ -8,12 +8,13 @@ import { Edit, Trash } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../../ui/button";
 import { DataTable } from "../../@shared/data-table/data-table";
-import { ITask } from "@/src/types/ITask";
+import { ITask, TaskStatus } from "@/src/types/ITask";
 import { DataTableColumnHeader } from "../../@shared/data-table/data-table-column-header";
 import { CustomDialog } from "../../@shared/custom-dialog/custom-dialog";
 import { TaskForm } from "../../forms/task-form/task-form";
 import { BadgeTaskStatus } from "../../badge/badge-task-status";
 import { textLimiter } from "@/src/lib/utils/functions/textLimitter";
+import { TaskTableFilters } from "./components/task-table-filters";
 
 export const TaskTable = () => {
   const [pagination, setPagination] = useState<PaginationState>({
@@ -24,12 +25,18 @@ export const TaskTable = () => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
+  const [search, setSearch] = useState<string>("");
+  const [status, setStatus] = useState<TaskStatus | "">("");
 
   const {
-    data: taskResult = [],
+    data: taskResult,
     isLoading: tasksIsLoading,
     isError: tasksIsError,
-  } = useGetAllTasks({});
+  } = useGetAllTasks({
+    pagination,
+    search,
+    status: status === "" ? undefined : (status as TaskStatus),
+  });
 
   const { mutateAsync: deleteTask, isPending: isDeleting } = useDeleteTask(
     TASK_QUERY_KEY.list
@@ -83,7 +90,7 @@ export const TaskTable = () => {
         return (
           <div className="space-x-2">
             <Button
-              variant="secondary"
+              variant="default"
               size="icon"
               onClick={() => {
                 setOpenDialog(true);
@@ -93,7 +100,7 @@ export const TaskTable = () => {
               <Edit />
             </Button>
             <Button
-              variant="secondary"
+              variant="destructive"
               size="icon"
               onClick={() => openDeleteModal(row.original.id!)}
             >
@@ -107,9 +114,16 @@ export const TaskTable = () => {
 
   return (
     <>
+      <TaskTableFilters
+        search={search}
+        setSearch={setSearch}
+        status={status}
+        setStatus={setStatus}
+      />
       <DataTable
+        total={taskResult?.meta.total ?? 0}
         columns={columns}
-        data={taskResult}
+        data={taskResult?.tasks ?? []}
         onSetPagination={setPagination}
         pagination={pagination}
         isLoading={tasksIsLoading}

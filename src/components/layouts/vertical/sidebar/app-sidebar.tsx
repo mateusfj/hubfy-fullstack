@@ -1,6 +1,5 @@
 "use client";
 
-import { Command } from "lucide-react";
 import * as React from "react";
 
 import {
@@ -8,34 +7,25 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
 } from "@/src/components/ui/sidebar";
 
 import { NavMain } from "./nav-main/nav-main";
 import { NavUser } from "./nav-user/nav-user";
 import { MenuItems } from "@/src/lib/utils/constants/menu-items";
+import Image from "next/image";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <a href="#">
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <Command className="size-4" />
-                </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Acme Inc</span>
-                  <span className="truncate text-xs">Enterprise</span>
-                </div>
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <div className="w-full flex justify-center items-center">
+          <Image
+            src="/logo.svg"
+            alt="Hubfy Fullstack"
+            width={150}
+            height={40}
+          />
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <NavMain data={MenuItems} />
