@@ -8,17 +8,20 @@ import { Button } from "../../ui/button";
 import { Form } from "../../ui/form";
 import { useTaskForm } from "./use-task-form";
 import { Spinner } from "../../ui/spinner";
+import { TaskStatus } from "@/src/types/ITask";
 
 interface TaskFormProps {
   onClose?: () => void;
   taskId?: number;
+  status?: TaskStatus;
 }
 
-const TaskForm = ({ onClose, taskId }: TaskFormProps) => {
+const TaskForm = ({ onClose, taskId, status }: TaskFormProps) => {
   const { form, onSubmit, isErrorTask, isLoadingTask, resultTask } =
     useTaskForm({
       onClose,
       taskId,
+      status,
     });
 
   if (isErrorTask) {
